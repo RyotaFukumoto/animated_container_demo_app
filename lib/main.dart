@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -26,7 +28,7 @@ class MyStateWidget extends StatefulWidget {
 
 class _MyStateWidgetState extends State<MyStateWidget> {
   bool selected = false;
-
+  Alignment _alg = Alignment.center;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,22 +36,27 @@ class _MyStateWidgetState extends State<MyStateWidget> {
         title: const Text('FloatingActionButton'),
         centerTitle: true,
       ),
-      body: Center(
+      body: Container(
+        width:500.0,
+        height: 500.0,
+        color: Colors.blue,
         child: AnimatedContainer(
-          width: selected ? 200.0 : 100.0,
-          height: selected ? 100.0 : 200.0,
-          color: selected ? Colors.red : Colors.blue,
-          alignment:
-              selected ? Alignment.center : AlignmentDirectional.topCenter,
+          alignment:_alg,
           duration: const Duration(seconds: 2),
           curve: Curves.fastOutSlowIn,
-          child: const FlutterLogo(size: 75),
+          child: Container(
+              width:  100.0,
+              height: 100.0,
+              color:  Colors.red,
+              child: const FlutterLogo(size: 75)),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            selected = !selected;
+            double x = Random().nextInt(3).toDouble()-1;
+            double y = Random().nextInt(3).toDouble()-1;
+            _alg = Alignment(x, y);
           });
           },
         child: const Icon(Icons.flutter_dash),
